@@ -2,7 +2,7 @@ const Asteroid = require("./asteroid");
 
 const DIM_X = 500;
 const DIM_Y = 500;
-const NUM_ASTEROIDS= 20;
+const NUM_ASTEROIDS= 15;
 
 function Game(){
     this.asteroids = [];
@@ -18,8 +18,8 @@ Game.prototype.randomPosition = function(){
 }
 
 Game.prototype.addAsteroids = function (){
-    for (let i = 1; i < NUM_ASTEROIDS; i++){
-        this.asteroids.push(new Asteroid(this.randomPosition()));
+    for (let i = 0; i < NUM_ASTEROIDS; i++){
+        this.asteroids.push(new Asteroid(this.randomPosition(), this));
     }
 }
 
@@ -38,20 +38,34 @@ Game.prototype.draw = function(ctx){
 }
 
 Game.prototype.wrap = function(pos){
-    
+    if (pos[0] > DIM_X || pos[1] > DIM_Y){
+        pos[0] = pos[0] % DIM_X;
+        pos[1] = pos[1] % DIM_Y;
+    }
+    if (pos[0] < 0 ){
+        pos[0]= pos[0] + DIM_X;
+    }
+    if (pos[1] < 0){
+        pos[1] = pos[1] + DIM_Y;
+    }
+    return pos;
 }
+Game.prototype.step = function(){
+
+}
+
+Game.prototype.checkCollisions = function(){
+    for (let i = 0; i < this.asteroids.length; i++ ){
+        for (let j = i+1; j < this.asteroids.length; j++){
+            if (this.asteroids[i].isCollidedWith(this.asteroids[j])){
+                alert("COLLISION");
+            }
+        }
+    }
+}
+
 
 module.exports = Game;
 
 
-// Game.prototype.step = function(){
 
-// }
-
-// Game.prototype.move = function(){
-
-// }
-
-// Game.prototype.checkCollisions = function(){
-
-// }
