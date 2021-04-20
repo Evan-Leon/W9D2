@@ -10,24 +10,39 @@ function Game(){
 
 }
 
+Game.prototype.randomPosition = function(){
+    let arr = []
+    arr.push(Math.random() * (DIM_X - 0) + 0);
+    arr.push(Math.random() * (DIM_Y - 0) + 0);
+    return arr;
+}
+
 Game.prototype.addAsteroids = function (){
     for (let i = 1; i < NUM_ASTEROIDS; i++){
-        this.asteroids.push(new Asteroid());
+        this.asteroids.push(new Asteroid(this.randomPosition()));
     }
 }
 
 Game.prototype.moveObjects = function (){
-    asteroids.forEach(function (asteroid){
+    this.asteroids.forEach(function (asteroid){
         asteroid.move();
     });
 }
 
-Game.prototype.draw(ctx) = function(){
-    ctx.clearRect();
-    asteroids.forEach(function (asteroid){
+Game.prototype.draw = function(ctx){
+    debugger
+    ctx.clearRect(0, 0, 500, 500);
+    this.asteroids.forEach(function (asteroid){
         asteroid.draw(ctx);
     });
 }
+
+Game.prototype.wrap = function(pos){
+    
+}
+
+module.exports = Game;
+
 
 // Game.prototype.step = function(){
 
