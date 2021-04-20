@@ -15,7 +15,7 @@
   \*************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\");\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\n\nconst COLOR = \"turquoise\";\nconst RADIUS = 50;\n\nfunction Asteroid(options){\n    options.color = COLOR;\n    options.radius = RADIUS;\n    options.vel = Util.randomVec(10); \n    // options.pos = options.pos; don't need, user inputted, inherited from MovingObject\n    MovingObject.call(this, options); \n}\n\nUtil.inherits(Asteroid, MovingObject);\n\nmodule.exports = Asteroid;\n\n//# sourceURL=webpack:///./src/asteroid.js?");
+eval("const Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\");\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\n\nconst COLOR = \"turquoise\";\nconst RADIUS = 50;\n\nfunction Asteroid(options){\n    options = options || {}\n    options.color = COLOR;\n    options.radius = RADIUS;\n    options.vel = Util.randomVec(10); \n    options.pos = options.pos || Util.randomVec(10);\n    MovingObject.call(this, options); \n}\n\nUtil.inherits(Asteroid, MovingObject);\n\nmodule.exports = Asteroid;\n\n\n\n//# sourceURL=webpack:///./src/asteroid.js?");
 
 /***/ }),
 
@@ -55,7 +55,7 @@ eval("const GameView = __webpack_require__(/*! ./game_view.js */ \"./src/game_vi
   \*********************/
 /***/ ((module) => {
 
-eval("const Util = function (){};\n\nUtil.prototype.inherits= function(childClass, parentClass) {\n      function Surrogate(){};\n      Surrogate.prototype = parentClass.prototype;\n      childClass.prototype = new Surrogate();\n      childClass.prototype.constructor = childClass;\n    }\n\nUtil.prototype.randomVec = function (length) {\n    const deg = 2 * Math.PI * Math.random();\n    return Util.scale([Math.sin(deg), Math.cos(deg)], length);\n}\n    // Scale the length of a vector by the given amount.\nUtil.prototype.scale = function (vec, m) {\n    return [vec[0] * m, vec[1] * m];\n}\n\n \n  \n  module.exports = Util;\n\n//# sourceURL=webpack:///./src/util.js?");
+eval("const Util = {\n\n    inherits: function(childClass, parentClass) {\n      function Surrogate(){};\n      Surrogate.prototype = parentClass.prototype;\n      childClass.prototype = new Surrogate();\n      childClass.prototype.constructor = childClass;\n    },\n\n    randomVec: function (length) {\n        const deg = 2 * Math.PI * Math.random();\n        return Util.scale([Math.sin(deg), Math.cos(deg)], length);\n    },\n    // Scale the length of a vector by the given amount.\n    scale: function (vec, m) {\n        return [vec[0] * m, vec[1] * m];\n    }\n};\n \n  \nmodule.exports = Util;\n\n//# sourceURL=webpack:///./src/util.js?");
 
 /***/ })
 
