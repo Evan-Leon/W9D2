@@ -9,6 +9,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/asteroid.js":
+/*!*************************!*\
+  !*** ./src/asteroid.js ***!
+  \*************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\");\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\n\nconst COLOR = \"turquoise\";\nconst RADIUS = 50;\n\nfunction Asteroid(options){\n    options.color = COLOR;\n    options.radius = RADIUS;\n    options.vel = Util.randomVec(10); \n    // options.pos = options.pos; don't need, user inputted, inherited from MovingObject\n    MovingObject.call(this, options); \n}\n\nUtil.inherits(Asteroid, MovingObject);\n\nmodule.exports = Asteroid;\n\n//# sourceURL=webpack:///./src/asteroid.js?");
+
+/***/ }),
+
 /***/ "./src/game_view.js":
 /*!**************************!*\
   !*** ./src/game_view.js ***!
@@ -25,7 +35,7 @@ eval("module.exports = {\n    canvas: document.addEventListener(\"DOMContentLoad
   \**********************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\nconst GameView = __webpack_require__(/*! ./game_view.js */ \"./src/game_view.js\");\n\nwindow.MovingObject = MovingObject;\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\nconst GameView = __webpack_require__(/*! ./game_view.js */ \"./src/game_view.js\");\nconst Asteroid = __webpack_require__(/*! ./asteroid.js */ \"./src/asteroid.js\");\n\n\nwindow.MovingObject = MovingObject;\nwindow.Asteroid = Asteroid;\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -35,7 +45,17 @@ eval("\nconst MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./s
   \******************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const GameView = __webpack_require__(/*! ./game_view.js */ \"./src/game_view.js\");\n\nfunction MovingObject(options){\n    debugger\n    this.pos = options[\"pos\"];\n    this.vel = options[\"vel\"];\n    this.radius = options[\"radius\"];\n    this.color = options[\"color\"];\n}\n\nMovingObject.prototype.move = function(){\n\n}\n\nMovingObject.prototype.draw = function(ctx){\n  ctx.beginPath();\n  ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true);\n  ctx.strokeStyle = this.color;\n  ctx.fillStyle = this.color;\n  ctx.fill();\n  ctx.stroke();\n}\n\n// MovingObject.prototype.isCollidedWith(otherMovingObject) = function(){\n  \n// }\n\nmodule.exports = MovingObject;\n\n\n//# sourceURL=webpack:///./src/moving_object.js?");
+eval("const GameView = __webpack_require__(/*! ./game_view.js */ \"./src/game_view.js\");\n\nfunction MovingObject(options){\n   \n    this.pos = options[\"pos\"];\n    this.vel = options[\"vel\"];\n    this.radius = options[\"radius\"];\n    this.color = options[\"color\"];\n}\n\nMovingObject.prototype.move = function(){\n    this.pos[0] += this.vel[0];\n    this.pos[1] += this.vel[1];\n    \n}\n\nMovingObject.prototype.draw = function(ctx){\n  ctx.beginPath();\n  ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true);\n  ctx.strokeStyle = this.color;\n  ctx.fillStyle = this.color;\n  ctx.fill();\n  ctx.stroke();\n}\n\n// MovingObject.prototype.isCollidedWith(otherMovingObject) = function(){\n  \n// }\n\nmodule.exports = MovingObject;\n\n\n//# sourceURL=webpack:///./src/moving_object.js?");
+
+/***/ }),
+
+/***/ "./src/util.js":
+/*!*********************!*\
+  !*** ./src/util.js ***!
+  \*********************/
+/***/ ((module) => {
+
+eval("const Util = function (){};\n\nUtil.prototype.inherits= function(childClass, parentClass) {\n      function Surrogate(){};\n      Surrogate.prototype = parentClass.prototype;\n      childClass.prototype = new Surrogate();\n      childClass.prototype.constructor = childClass;\n    }\n\nUtil.prototype.randomVec = function (length) {\n    const deg = 2 * Math.PI * Math.random();\n    return Util.scale([Math.sin(deg), Math.cos(deg)], length);\n}\n    // Scale the length of a vector by the given amount.\nUtil.prototype.scale = function (vec, m) {\n    return [vec[0] * m, vec[1] * m];\n}\n\n \n  \n  module.exports = Util;\n\n//# sourceURL=webpack:///./src/util.js?");
 
 /***/ })
 
