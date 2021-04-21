@@ -11,7 +11,7 @@ GameView.prototype.start = function(){
     const that = this;
     setInterval(function(){
         // debugger
-        that.game.moveObjects();
+        that.game.step();
         debugger
         that.game.draw(that.context);
     }, 20);

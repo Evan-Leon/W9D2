@@ -26,8 +26,9 @@ MovingObject.prototype.draw = function(ctx){
 }
 
 MovingObject.prototype.isCollidedWith = function(otherObject){
-    if ((this.pos[0] - otherObject.pos[0]) < this.radius
-        || (this.pos[1] - otherObject.pos[1]) < this.radius){
+  // debugger
+    if (Math.abs((this.pos[0] - otherObject.pos[0])) < this.radius
+        && Math.abs((this.pos[1] - otherObject.pos[1])) < this.radius){
         return true;
     }else {
         return false;
